@@ -1,0 +1,86 @@
+#! vi: set filetype=ansible:
+---
+- name: use mirror server
+  replace:
+    dest=/etc/apt/sources.list
+    regexp='http:\/\/[^/]+\/ubuntu'
+    replace='http://ftp.riken.jp/Linux/ubuntu'
+    backup=yes
+
+- apt_key:
+    url=http://repo.zabbix.com/zabbix-official-repo.key
+    state=present
+- apt_repository:
+    repo={{ item }}
+    state=present 
+  with_items:
+    - 'deb http://repo.zabbix.com/zabbix/3.0/ubuntu trusty main'
+    - 'deb-src http://repo.zabbix.com/zabbix/3.0/ubuntu trusty main'
+
+- apt:
+    name={{ item }}
+    state=present
+  with_items:
+    - 'gzip'
+    - 'zabbix-server-pgsql'
+    - 'zabbix-frontend-php'
+    - 'python-psycopg2'
+    - 'php5-pgsql'
+    - 'fonts-ipaexfont'
+    - 'language-pack-ja'
+
+- replace:
+    dest=/etc/postgresql/9.3/main/pg_hba.conf
+    regexp='^(local\s+all\s+all\s+)peer'
+    replace='\1 trust'
+    backup=yes
+  notify: postgresql reloaded
+
+#
+# Japanes font for zabbix metrics
+#
+- alternatives:
+    name=zabbix-frontend-font
+    path=/usr/share/fonts/opentype/ipaexfont-gothic/ipaexg.ttf
+
+- postgresql_user:
+    name=zabbix
+    password=6117982f58a0b71e
+  sudo: yes
+  sudo_user: postgres
+
+- postgresql_db:
+    name=zabbix owner=zabbix state=present
+  sudo: yes
+  sudo_user: postgres
+
+- script: files/initialize-db.sh
+  sudo: yes
+  sudo_user: postgres
+  environment:
+    PASSWORD: 6117982f58a0b71e
+
+
+#
+# zabbix_server agent
+# 
+- template:
+    src=templates/etc/zabbix/zabbix_server.conf.j2
+    dest=/etc/zabbix/zabbix_server.conf
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: zabbix-server reloaded
+
+
+#
+# Web server config
+#
+- replace:
+    dest=/etc/php5/apache2/php.ini
+    regexp='^;(date\.timezone.*=).*'
+    replace='\1 Asia/Tokyo'
+    backup=yes
+  notify: apache2 reloaded
+

@@ -1,0 +1,15 @@
+---
+- name: postgresql reloaded
+  service:
+    name=postgresql
+    state=reloaded
+
+- name: zabbix-server reloaded
+  service:
+    name=zabbix
+    state=reloaded
+
+- name: apache2 reloaded
+  service:
+    name=apache2
+    state=reloaded

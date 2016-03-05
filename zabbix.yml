@@ -1,0 +1,5 @@
+---
+- hosts: zabbix_master
+  sudo: True
+  roles:
+    - zabbix
