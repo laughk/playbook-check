@@ -1,0 +1,13 @@
+- name: change Auth method
+  replace:
+    dest=/etc/postgresql/9.3/main/pg_hba.conf
+    regexp='^(local\s+all\s+all\s+)peer'
+    replace='\1md5'
+    backup=yes
+    owner=postgres
+    group=postgres
+    mode=0640
+  notify:
+    - postgresql reloaded
+
+- include: init_db/postgresqal.yml
