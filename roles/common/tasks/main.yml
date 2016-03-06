@@ -14,6 +14,17 @@
     - gzip
     - bash-completion
 
+- name: timezone update
+  copy:
+    content='Asia/Tokyo'
+    dest=/etc/timezone
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify:
+    - update timezone
+
 - locale_gen:
     name=ja_JP.UTF-8
     state=present
