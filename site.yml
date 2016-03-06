@@ -1,2 +1,2 @@
 ---
-- include: zabbix.yml
+- include: monitoring.yml

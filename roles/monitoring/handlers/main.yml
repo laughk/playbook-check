@@ -13,7 +13,12 @@
     name=zabbix-server
     state=reloaded
 
-- name: apache2 reloaded
+- name: nginx reload
   service:
-    name=apache2
+    name=nginx
     state=reloaded
+
+- name: php5-fpm restart
+  service:
+    name=php5-fpm
+    state=restarted

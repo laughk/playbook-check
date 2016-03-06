@@ -1,7 +1,0 @@
-- replace:
-    dest=/etc/php5/apache2/php.ini
-    regexp='^;(date\.timezone.*=).*'
-    replace='\1 Asia/Tokyo'
-    backup=yes
-  notify:
-    - apache2 reloaded

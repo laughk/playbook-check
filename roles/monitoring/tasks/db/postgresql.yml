@@ -7,7 +7,12 @@
     owner=postgres
     group=postgres
     mode=0640
-  notify:
-    - postgresql reloaded
+  register: pg_update_auth_method
+
+- name: postgresql restart
+  service:
+    name=postgresql
+    state=reloaded
+  when: pg_update_auth_method.changed
 
 - include: init_db/postgresqal.yml

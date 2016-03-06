@@ -3,3 +3,4 @@
 - include: package.yml
 - include: db.yml
 - include: zabbix_server.yml
+  when: monitoring_master
