@@ -1,5 +1,6 @@
 ---
 - hosts: zabbix_master
-  sudo: True
+  become: yes
   roles:
+    - common
     - zabbix
