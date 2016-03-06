@@ -1,0 +1,19 @@
+---
+- name: use mirror server
+  replace:
+    dest=/etc/apt/sources.list
+    regexp='http:\/\/[^/]+\/ubuntu'
+    replace='http://ftp.riken.jp/Linux/ubuntu'
+    backup=yes
+
+- apt:
+    name={{ item }}
+    state=latest
+    update_cache=yes
+  with_items:
+    - gzip
+    - bash-completion
+
+- locale_gen:
+    name=ja_JP.UTF-8
+    state=present
