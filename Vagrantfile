@@ -3,7 +3,7 @@
 
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "minimal/trusty64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "zabbix_master" do |zabbix_master|
     zabbix_master.vm.network "private_network", ip: "192.168.33.10"
@@ -22,5 +22,6 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "site.yml"
     ansible.inventory_path = "hosts.ini"
     ansible.limit = "all"
+    #ansible.raw_arguments  = [ "-vvv" ]
   end
 end
