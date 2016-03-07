@@ -13,6 +13,11 @@
     name=zabbix-server
     state=reloaded
 
+- name: zabbix-agent restart
+  service:
+    name=zabbix-agent
+    state=restarted
+
 - name: nginx reload
   service:
     name=nginx

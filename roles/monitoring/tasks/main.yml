@@ -1,6 +1,11 @@
 #! vi: set filetype=ansible:
 ---
 - include: package.yml
+
 - include: db.yml
+  when: monitoring_master
+
 - include: zabbix_server.yml
   when: monitoring_master
+
+- include: zabbix_agent.yml

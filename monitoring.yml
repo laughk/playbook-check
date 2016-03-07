@@ -1,7 +1,7 @@
 ---
 - hosts: zabbix_master
   vars:
-    monitoring_master: True
+    monitoring_master: true
   become: yes
   roles:
     - common
