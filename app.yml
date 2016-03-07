@@ -1,0 +1,8 @@
+---
+- hosts: app
+  become: yes
+  vars:
+    monitoring_master: false
+  roles:
+    - common
+    - monitoring

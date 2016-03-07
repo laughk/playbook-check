@@ -1,2 +1,3 @@
 ---
 - include: monitoring.yml
+- include: app.yml
