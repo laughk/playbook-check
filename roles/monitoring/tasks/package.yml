@@ -11,6 +11,7 @@
     - 'deb-src http://repo.zabbix.com/zabbix/3.0/ubuntu trusty main'
 
 - name: install zabbix server packages
+  when: monitoring_master
   apt:
     name={{ item }}
     state=present
@@ -23,7 +24,6 @@
     - 'python-psycopg2'
     - 'php5-pgsql'
     - 'fonts-ipaexfont'
-  when: monitoring_master
 
 - name: install zabbix agent
   apt:
