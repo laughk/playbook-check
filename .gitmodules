@@ -1,3 +1,0 @@
-[submodule "roles/monitoring"]
-	path = roles/monitoring
-	url = https://github.com/laughk/zabbix-playbook-ubuntu1404.git
