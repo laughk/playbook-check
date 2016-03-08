@@ -1,4 +1,0 @@
-- include: zabbix_server/{{ item }}
-  with_items:
-    - zabbix_server.yml
-    - zabbix_frontend.yml
